@@ -1,9 +1,10 @@
 import React from "react";
+import Body from "./components/Body";
 
 function App() {
   return (
     <div className="ticks">
-      <h1 class="text-3xl font-bold">Let's get started!</h1>
+      <Body/>
     </div>
   );
 }
