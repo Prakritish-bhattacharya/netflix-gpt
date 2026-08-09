@@ -1,8 +1,26 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import { checkValidData } from "../utils/validate";
 import Header from "./Header";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+  // useRef
+  const name = useRef(null);
+  const email = useRef(null);
+  const password = useRef(null);
+
+  const handleButtonClick = () => {
+    // validate the form data
+    const message = checkValidData(
+      name.current.value,
+      email.current.value,
+      password.current.value,
+    );
+    setErrorMessage(message);
+
+    // Sign/Sign Up
+  };
 
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
@@ -27,7 +45,9 @@ const Login = () => {
 
       {/* Login Form Container */}
       <div className="min-h-screen flex justify-center items-center px-4 pt-20">
-        <form className="w-full sm:w-8/12 md:w-6/12 lg:w-4/12 p-12 bg-black/75 text-white rounded-lg">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="w-full sm:w-8/12 md:w-6/12 lg:w-4/12 p-12 bg-black/75 text-white rounded-lg">
           <h1 className="font-bold text-3xl py-4">
             {isSignInForm ? "Sign In" : "Sign Up"}
           </h1>
@@ -35,6 +55,7 @@ const Login = () => {
           {/* Full Name - Only for Sign Up */}
           {!isSignInForm && (
             <input
+              ref={name}
               type="text"
               placeholder="Full Name"
               className="p-2.5 my-4 w-full bg-gray-700"
@@ -43,6 +64,7 @@ const Login = () => {
 
           {/* Email */}
           <input
+            ref={email}
             type="email"
             placeholder="Email Address"
             className="p-2.5 my-4 w-full bg-gray-700"
@@ -50,13 +72,18 @@ const Login = () => {
 
           {/* Password */}
           <input
+            ref={password}
             type="password"
             placeholder="Password"
             className="p-2.5 my-4 w-full bg-gray-700"
           />
 
+          <p className="text-red-500 font-bold ">{errorMessage}</p>
           {/* Button */}
-          <button type="submit" className="p-2.5 my-3 bg-red-700 w-full">
+          <button
+            type="submit"
+            className="p-2.5 my-3 bg-red-700 w-full"
+            onClick={handleButtonClick}>
             {isSignInForm ? "Sign In" : "Sign Up"}
           </button>
 
