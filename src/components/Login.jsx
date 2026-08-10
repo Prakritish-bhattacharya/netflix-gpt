@@ -7,14 +7,14 @@ import {
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import Header from "./Header";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BACKGROUND_IMAGE, USER_PHOTO_URL } from "../utils/constants";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   // useRef
   const name = useRef(null);
@@ -46,7 +46,7 @@ const Login = () => {
           // update user profile and takes user name
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL: "https://avatars.githubusercontent.com/u/159606210?v=4",
+            photoURL: USER_PHOTO_URL,
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
@@ -58,12 +58,11 @@ const Login = () => {
                   photoURL: photoURL,
                 }),
               );
-              navigate("/browse");
             })
             .catch((error) => {
               setErrorMessage(errorMessage);
             });
-          console.log(user);
+          
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -81,9 +80,7 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
-          navigate("/browse");
-          // ...
+          
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -106,7 +103,7 @@ const Login = () => {
       <div className="fixed inset-0 -z-10">
         <img
           className="w-full h-full object-cover"
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/0ce6c17e-e188-4f13-aaf2-6366e12ba739/web/IN-en-20260803-TRIFECTA-perspective_7730cca2-6324-4104-bf66-1a1f6e1a3e61_large.jpg"
+          src={BACKGROUND_IMAGE}
           alt="Background"
         />
       </div>

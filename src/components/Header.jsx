@@ -1,32 +1,59 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { auth } from "../utils/firebase";
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Error from "./Error";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser, removeUser } from "../utils/userSlice";
+import { NETFLIX_LOGO } from "../utils/constants";
 
 const Header = () => {
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
 
   const handleSignOut = () => {
     signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-        navigate("/");
-      })
+      .then(() => {})
       .catch((error) => {
         // An error happened.
         navigate("/error");
       });
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          }),
+        );
+        navigate("/browse");
+      } else {
+        // User is signed out
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+    // unsubscribe when components unmounts
+    return () => unsubscribe();
+  }, []);
+
   return (
     <div className="absolute w-screen px-8 py-2 bg-linear-to-b from-black z-10 flex justify-between">
       <img
         className="w-44"
-        src="https://occ.a.nflxso.net/dnmt/api/v6/iL4oJVDYZ8KLSrJ6eG2OwtghbfQ/AAAAAZge2REfWoSoWRs31izjUdgihldMUslSHTdfz-1aT4vVrgJuVByU92G8wIrBkwULJHWjM1khpzW0xWndigQFYViKFpy-pM6NZFnTKEPkpf9hcdSzCyzqBbcouyIpmgVLbodhaeyqCXaS.svg"
+        src={NETFLIX_LOGO}
         alt="Netflix Logo"></img>
       <div>
         {user && (
