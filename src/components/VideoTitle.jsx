@@ -16,7 +16,7 @@ const VideoTitle = ({ title, overview }) => {
         
         {/* Play Button */}
         <button
-          className="flex items-center gap-1.5 bg-white text-black px-8 py-4 rounded-full font-semibold text-xl hover:bg-white/80 transition duration-200"
+          className="flex items-center gap-1.5 bg-white text-black px-4 py-3 rounded-full font-semibold text-xl hover:bg-white/80 transition duration-200"
         >
           <span className="text-2xl leading-none">▶</span>
           <span>Play</span>
@@ -24,7 +24,7 @@ const VideoTitle = ({ title, overview }) => {
 
         {/* More Info Button */}
         <button
-          className="flex items-center gap-1.5 bg-gray-500/70 text-white px-8 py-4 rounded-full font-semibold text-xl hover:bg-gray-500/50 transition duration-200"
+          className="flex items-center gap-1.5 bg-gray-500/70 text-white px-4 py-3 rounded-full font-semibold text-xl hover:bg-gray-500/50 transition duration-200"
         >
           <span className="text-2xl leading-none">ⓘ</span>
           <span>More Info</span>
