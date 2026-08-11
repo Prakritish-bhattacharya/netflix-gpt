@@ -62,7 +62,6 @@ const Login = () => {
             .catch((error) => {
               setErrorMessage(errorMessage);
             });
-          
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -80,7 +79,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -112,21 +110,22 @@ const Login = () => {
       <div className="fixed inset-0 bg-black/50 -z-10"></div>
 
       {/* Login Form Container */}
-      <div className="min-h-screen flex justify-center items-center px-4 pt-20">
+      <div className="min-h-screen w-full flex justify-center items-start sm:items-center px-4 pt-24 pb-8">
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="w-full sm:w-8/12 md:w-6/12 lg:w-4/12 p-12 bg-black/75 text-white rounded-lg">
-          <h1 className="font-bold text-3xl py-4">
+          className="w-full max-w-sm p-5 sm:p-8 md:p-10 lg:p-12 bg-black/75 text-white rounded-lg">
+          {/* Heading */}
+          <h1 className="font-bold text-2xl sm:text-3xl py-3 sm:py-4">
             {isSignInForm ? "Sign In" : "Sign Up"}
           </h1>
 
-          {/* Full Name - Only for Sign Up */}
+          {/* Full Name */}
           {!isSignInForm && (
             <input
               ref={name}
               type="text"
               placeholder="Full Name"
-              className="p-2.5 my-4 w-full bg-gray-700"
+              className="p-3 my-3 w-full bg-gray-700 rounded text-sm sm:text-base"
             />
           )}
 
@@ -135,7 +134,7 @@ const Login = () => {
             ref={email}
             type="email"
             placeholder="Email Address"
-            className="p-2.5 my-4 w-full bg-gray-700"
+            className="p-3 my-3 w-full bg-gray-700 rounded text-sm sm:text-base "
           />
 
           {/* Password */}
@@ -143,20 +142,24 @@ const Login = () => {
             ref={password}
             type="password"
             placeholder="Password"
-            className="p-2.5 my-4 w-full bg-gray-700"
+            className="p-3 my-3 w-full bg-gray-700 rounded text-sm sm:text-base"
           />
 
-          <p className="text-red-500 font-bold ">{errorMessage}</p>
+          {/* Error */}
+          <p className="text-red-500 font-bold text-sm">{errorMessage}</p>
+
           {/* Button */}
           <button
             type="submit"
-            className="p-2.5 my-3 bg-red-700 w-full"
-            onClick={handleButtonClick}>
+            onClick={handleButtonClick}
+            className="p-3 my-3 bg-red-700 hover:bg-red-800 w-full rounded font-semibold text-sm sm:text-base">
             {isSignInForm ? "Sign In" : "Sign Up"}
           </button>
 
           {/* Toggle */}
-          <p className="py-2.5 cursor-pointer" onClick={toggleSignInForm}>
+          <p
+            className=" py-2 cursor-pointer text-sm sm:text-base text-gray-300 hover:text-white"
+            onClick={toggleSignInForm}>
             {isSignInForm
               ? "New to Netflix? Sign Up Now"
               : "Already registered? Sign In Now"}

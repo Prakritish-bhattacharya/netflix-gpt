@@ -59,10 +59,10 @@ const Header = () => {
   };
 
   return (
-    <div className="absolute w-screen px-8 py-2 bg-linear-to-b from-black z-10 flex justify-between">
-      <img className="w-44" src={NETFLIX_LOGO} alt="Netflix Logo"></img>
+    <div className="absolute w-screen px-8 py-2 bg-linear-to-b from-black z-10 flex justify-between flex-col md:flex-row ">
+      <img className="w-44 mx-auto md:mx-0" src={NETFLIX_LOGO} alt="Netflix Logo"></img>
       {user && (
-        <div className="flex">
+        <div className="flex justify-between mt-3 md:mt-0">
           {showGptSearch && (
             <select
               className="p-2 py-2 mx-4  bg-gray-900 text-white m-2 rounded-lg"
