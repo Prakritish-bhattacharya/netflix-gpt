@@ -13,7 +13,7 @@ const useUpComingMovies = () => {
       API_OPTIONS,
     );
     const json = await data.json();
-    console.log(json)
+    
 
     // add json from movie slice
     dispatch(addUpComingMovies(json.results)); // Add JSON to my movies Slice
